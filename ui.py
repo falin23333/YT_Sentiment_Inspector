@@ -4,7 +4,7 @@ import requests
 import funciones
 import openai
 from streamlit_lottie import st_lottie
-import xgboost as xgb
+
 import pickle
 import pandas as pd
 

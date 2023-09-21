@@ -29,7 +29,7 @@ import plotly.subplots as sp
 import xgboost as xgb
 
 XGB_model_offensive = xgb.XGBClassifier()
-XGB_model_offensive.load_model('models/XGBClassifier_offensive.bin')
+XGB_model_offensive.load_model(f'models/XGBClassifier_offensive.bin')
 
 
 with open(f'models/RandomForest_model_SARCASM.pkl', 'rb') as f:
