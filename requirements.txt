@@ -1,3 +1,8 @@
 nltk
-pickle
+streamlit_lottie
+seaborn
+openai
+pandas
+plotly
+scikit-learn == 1.0.2
 itertools
