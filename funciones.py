@@ -26,12 +26,12 @@ nltk.download('vader_lexicon')
 sia = SentimentIntensityAnalyzer()
 import plotly.graph_objs as go
 import plotly.subplots as sp
+import xgboost as xgb
+
+XGB_model_offensive = xgb.XGBClassifier()
+XGB_model_offensive.load_model('models/XGBClassifier_offensive.bin')
 
 
-
-
-with open(f'models/XGBClassifier_offensive.pkl', 'rb') as f:
-    XGB_model_offensive = pickle.load(f)
 with open(f'models/RandomForest_model_SARCASM.pkl', 'rb') as f:
     RandomForest_model_SARCASM = pickle.load(f)
 with open(f'models/LogisticRegression_emotions.pkl', 'rb') as f:
