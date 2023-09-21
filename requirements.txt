@@ -1,4 +1,3 @@
 nltk
-AdaBoostClassifier
 pickle
 itertools
