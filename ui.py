@@ -26,7 +26,7 @@ def main():
         left,rigth = st.columns(2)
         with left:
             lottie_url = "https://lottie.host/9b1d760a-d152-4817-9a7c-d5dce70d0f96/65tWrCArzp.json"
-            lottie_json = load_lottieurl(lottie_url)
+            #lottie_json = load_lottieurl(lottie_url)
             st_lottie(lottie_json,height=400)
             lottie_url = "https://lottie.host/d27c410d-c34e-494c-826b-47d37805e1e1/VkSmAWhA8B.json"
             lottie_json = load_lottieurl(lottie_url)
