@@ -57,6 +57,7 @@ YT Sentiment Inspector is a powerful and versatile tool designed to provide you 
     
     st.sidebar.text("Introduce ID YT ")
     st.sidebar.image("example.png")
+    st.sidebar.text("Comments in English, please.")
     for idd in id_videos:
         value = st.sidebar.text_input(f'Selecciona {idd}', max_chars=20,disabled=False,value = "")
         input[idd] = value
