@@ -72,14 +72,15 @@ YT Sentiment Inspector is a powerful and versatile tool designed to provide you 
         data = pd.DataFrame(columns=['text', 'likes', 'dislikes'])
         for i,dataa in enumerate(lista):
             data = pd.concat([data,pd.DataFrame(dataa)])  # creo dataframe con todas las listas de comentarios
-        
-        st.subheader(f":blue[{len(data)} comentarios capturados.] :yellow[Be Patience!]")
-        data["text_stemmer"] = data["text"].apply(funciones.cleantext_to_Stemmer_v2) # PORTER STEMMER
-        data["sarcasmo"] = data["text_stemmer"].apply(funciones.busca_sarcasmo)# ETIQUETANDO COMENTARIOS sarcasmo
-        data["Ofensivo"] = data["text_stemmer"].apply(funciones.busca_toxity)# ETIQUETANDO COMENTARIOS OFENSIVOS
-        data["Emotions"] = data["text_stemmer"].apply(funciones.busca_emotions)# ETIQUETANDO Emociones
-        #st.write(data.drop(columns = "text_stemmer"), width=1500)
-        
+        try:
+            st.subheader(f":blue[{len(data)} comentarios capturados.] :yellow[Be Patience!]")
+            data["text_stemmer"] = data["text"].apply(funciones.cleantext_to_Stemmer_v2) # PORTER STEMMER
+            data["sarcasmo"] = data["text_stemmer"].apply(funciones.busca_sarcasmo)# ETIQUETANDO COMENTARIOS sarcasmo
+            data["Ofensivo"] = data["text_stemmer"].apply(funciones.busca_toxity)# ETIQUETANDO COMENTARIOS OFENSIVOS
+            data["Emotions"] = data["text_stemmer"].apply(funciones.busca_emotions)# ETIQUETANDO Emociones
+            #st.write(data.drop(columns = "text_stemmer"), width=1500)
+        except:
+            st.write("ID not valid!!")
         
         st.subheader(":red[Visualizacion de Datos]")
         funciones.tendencias(data)
