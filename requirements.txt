@@ -5,6 +5,15 @@ openai
 xgboost
 pandas
 plotly
-scikit-learn == 1.0.2
+
 wordcloud
 funciones
+streamlit_lottie
+seaborn
+
+plotly
+
+
+scikit-learn==0.24.2
+joblib==1.0.1
+threadpoolctl==2.1.0
