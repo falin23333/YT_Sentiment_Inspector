@@ -177,9 +177,8 @@ def tendencias(data):
     todos = []
     for i in range(data["text_stemmer"].shape[0]):
         titular = data.iloc[i].text_stemmer
-        titular = nltk.tokenize.RegexpTokenizer("[\w]+").tokenize(titular)
-        titular = [word for word in titular if word not in stopwords_english]
-        titular = [word for word in titular if word not in filtrar]
+        titular = nltk.tokenize.RegexpTokenizer(r"[\w]+").tokenize(titular)
+        titular = [word for word in titular if word not in stopwords_english and word not in filtrar]
         todos.append(titular)
 
     # Flatten lista de listas
@@ -204,8 +203,9 @@ def tendencias(data):
     )
     fig.update_xaxes(tickangle=45)
 
-    # Generar WordCloud si hay palabras
-    word_freq = dict(zip(df_freq_comments['Word'], df_freq_comments['Frequency']))
+    # Generar WordCloud solo si hay palabras con frecuencia > 0
+    word_freq = {word: freq for word, freq in zip(df_freq_comments['Word'], df_freq_comments['Frequency']) if freq > 0}
+
     if word_freq:
         wc = WordCloud(
             max_words=7200,
@@ -215,17 +215,18 @@ def tendencias(data):
             background_color='white'
         ).generate_from_frequencies(word_freq)
 
-        # Función para mostrar WordCloud
+        # Función para mostrar WordCloud en Streamlit
         def plot_cloud(wc):
-            plt.figure(figsize=(10,6))
+            fig_wc = plt.figure(figsize=(10,6))
             plt.imshow(wc.to_array(), interpolation='bilinear')
             plt.axis("off")
-            st.pyplot(plt)
+            st.pyplot(fig_wc)
+            plt.close(fig_wc)  # Cerrar figura para evitar conflictos
 
         st.write(":blue[WORDCLOUD]")
         plot_cloud(wc)
     else:
-        st.warning("No hay palabras para generar la nube de palabras.")
+        st.warning("No hay palabras válidas para generar la nube de palabras.")
 
     # Mostrar gráfico de barras
     st.write(':blue[Frecuencia de palabras más usadas]')
