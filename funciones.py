@@ -228,6 +228,13 @@ def tendencias(data):
 
 # Título
     st.write(":blue[WORDCLOUD]")
+    
+    # Llamada a la función
+    plot_cloud(wc)
+    
+    # Frecuencia de palabras
+    st.write(':blue[Frecuencia de palabras más usadas]')
+    st.plotly_chart(fig)
 def SIA_POLARITY(texto):
     # Calcular el puntaje de sentimiento del texto
     sentimiento = sia.polarity_scores(texto)
