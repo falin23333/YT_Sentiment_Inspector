@@ -11,11 +11,11 @@ import pandas as pd
 import xgboost as xgb
 from sklearn import svm
 
-def load_lottieurl(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
+import json
+
+def load_lottieurl(filepath: str):
+    with open(filepath, "r") as f:
+        return json.load(f)
 
 
 ################################################################################################################################################################
@@ -25,11 +25,11 @@ def main():
         #st.header(":red[Rubiales vs Jenny Analisis de Sentimiento] :wave:")
         left,rigth = st.columns(2)
         with left:
-            lottie_url = "\A.json"
+            lottie_json = load_lottieurl("A.json")
             #lottie_json = load_lottieurl(lottie_url)
-            #st_lottie(lottie_json,height=400)
-            lottie_url = "\B.json"
-            lottie_json = load_lottieurl(lottie_url)
+            st_lottie(lottie_json,height=400)
+            
+            lottie_json = load_lottieurl("B.json")
             st_lottie(lottie_json,height=400)
         with rigth:
             st.title(":red[YT Sentiment Inspector v1.0!]")
