@@ -223,24 +223,24 @@ if word_freq:
         background_color='white'
     ).generate_from_frequencies(word_freq)
 
-    def plot_cloud(wc):
-        # Crear figura
-        plt.figure(figsize=(10,6))
-        # Mostrar la WordCloud
-        plt.imshow(wc.to_array(), interpolation='bilinear')
-        plt.axis("off")
-        # Mostrar directamente en Streamlit
-        st.pyplot(plt)
+def plot_cloud(wc):
+    # Crear figura
+    plt.figure(figsize=(10,6))
+    # Mostrar la WordCloud
+    plt.imshow(wc.to_array(), interpolation='bilinear')
+    plt.axis("off")
+    # Mostrar directamente en Streamlit
+    st.pyplot(plt)
     
     # Título
     st.write(":blue[WORDCLOUD]")
     
-    # Llamada a la función
-    plot_cloud(wc)
+# Llamada a la función
+plot_cloud(wc)
     
-    # Frecuencia de palabras
-    st.write(':blue[Frecuencia de palabras más usadas]')
-    st.plotly_chart(fig)
+# Frecuencia de palabras
+st.write(':blue[Frecuencia de palabras más usadas]')
+st.plotly_chart(fig)
 else:
     st.warning("No hay palabras para generar la nube de palabras.")
 def SIA_POLARITY(texto):
