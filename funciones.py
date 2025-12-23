@@ -10,7 +10,7 @@ from nltk.corpus import stopwords
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-
+from io import BytesIO  # ← Import necesario
 import itertools
 from wordcloud import WordCloud
 import plotly.express as px
