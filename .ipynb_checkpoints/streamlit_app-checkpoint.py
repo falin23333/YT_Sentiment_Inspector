@@ -25,10 +25,10 @@ def main():
         #st.header(":red[Rubiales vs Jenny Analisis de Sentimiento] :wave:")
         left,rigth = st.columns(2)
         with left:
-            lottie_url = "https://app.lottiefiles.com/animation/a9d18063-1807-49f1-a7fc-1586c976b1f2"
+            lottie_url = "https://lottie.host/9b1d760a-d152-4817-9a7c-d5dce70d0f96/65tWrCArzp.json"
             #lottie_json = load_lottieurl(lottie_url)
             #st_lottie(lottie_json,height=400)
-            lottie_url = "https://app.lottiefiles.com/animation/d120178f-4913-4a99-869d-caecdc02d00c"
+            lottie_url = "https://lottie.host/d27c410d-c34e-494c-826b-47d37805e1e1/VkSmAWhA8B.json"
             lottie_json = load_lottieurl(lottie_url)
             st_lottie(lottie_json,height=400)
         with rigth:
