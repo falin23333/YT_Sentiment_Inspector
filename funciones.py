@@ -207,24 +207,28 @@ def tendencias(data):
     word_freq = {word: freq for word, freq in zip(df_freq_comments['Word'], df_freq_comments['Frequency']) if freq > 0}
 
     if word_freq:
-        wc = WordCloud(
-            max_words=7200,
-            width=1600,
-            height=1000,
-            stopwords=stopwords_english,
-            background_color='white'
-        ).generate_from_frequencies(word_freq)
+        try:
+            wc = WordCloud(
+                max_words=7200,
+                width=1600,
+                height=1000,
+                stopwords=stopwords_english,
+                background_color='white'
+            ).generate_from_frequencies(word_freq)
 
-        # Función para mostrar WordCloud en Streamlit
-        def plot_cloud(wc):
-            fig_wc = plt.figure(figsize=(10,6))
-            plt.imshow(wc.to_array(), interpolation='bilinear')
-            plt.axis("off")
-            st.pyplot(fig_wc)
-            plt.close(fig_wc)  # Cerrar figura para evitar conflictos
+            # Función para mostrar WordCloud en Streamlit
+            def plot_cloud(wc):
+                fig_wc = plt.figure(figsize=(10,6))
+                plt.imshow(wc.to_array(), interpolation='bilinear')
+                plt.axis("off")
+                st.pyplot(fig_wc)
+                plt.close(fig_wc)
 
-        st.write(":blue[WORDCLOUD]")
-        plot_cloud(wc)
+            st.write(":blue[WORDCLOUD]")
+            plot_cloud(wc)
+
+        except Exception as e:
+            st.warning(f"No se pudo generar la nube de palabras. Error: {e}")
     else:
         st.warning("No hay palabras válidas para generar la nube de palabras.")
 
