@@ -216,19 +216,18 @@ def tendencias(data):
     wc = WordCloud( max_words=7200, width=1600,height = 1000 , stopwords = stopwords_english).generate_from_frequencies(word_freq)
     def plot_cloud(wc):
         # Set figure size
-        plt.figure(figsize = (10,6))
-        # Display image
-        plt.imshow(wc) 
+        plt.figure(figsize=(10,6))
+        # Display image from WordCloud object
+        plt.imshow(wc.to_array(), interpolation='bilinear') 
         # No axis details
         plt.axis("off")
+        # Save the image
         plt.savefig("wordcloud.png", bbox_inches="tight")
-      
+        # Display in Streamlit
         st.image("wordcloud.png")
-    st.write(":blue[WORDCLOUD ]")
-    plot_cloud(wc)
-    #st.write("\n\n\n:blue[Frecuencia de palabras más usadas ]")
-    st.write(':blue[Frecuencia de palabras más usadas]')
-    st.plotly_chart(fig)
+
+# Título
+    st.write(":blue[WORDCLOUD]")
 def SIA_POLARITY(texto):
     # Calcular el puntaje de sentimiento del texto
     sentimiento = sia.polarity_scores(texto)
