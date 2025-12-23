@@ -216,16 +216,12 @@ def tendencias(data):
                 background_color='white'
             ).generate_from_frequencies(word_freq)
 
-            # Función para mostrar WordCloud en Streamlit
-            def plot_cloud(wc):
-                fig_wc = plt.figure(figsize=(10,6))
-                plt.imshow(wc.to_array(), interpolation='bilinear')
-                plt.axis("off")
-                st.pyplot(fig_wc)
-                plt.close(fig_wc)
-
+            # Convertir WordCloud a imagen y mostrar en Streamlit
+            img_buffer = BytesIO()
+            wc.to_image().save(img_buffer, format='PNG')
+            img_buffer.seek(0)
             st.write(":blue[WORDCLOUD]")
-            plot_cloud(wc)
+            st.image(img_buffer)
 
         except Exception as e:
             st.warning(f"No se pudo generar la nube de palabras. Error: {e}")
