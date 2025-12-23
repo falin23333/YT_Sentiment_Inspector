@@ -171,78 +171,65 @@ def busca_emotions(text):
 
 
 def tendencias(data):
-    
-            
-            
-    filtrar = []
-    if True:
-        filtrar.append("quot")
-        filtrar.append("br")
-        filtrar.append("si")
-        filtrar.append("39")
+    filtrar = ["quot", "br", "si", "39"]
 
+    # Preprocesamiento de texto
     todos = []
     for i in range(data["text_stemmer"].shape[0]):
         titular = data.iloc[i].text_stemmer
         titular = nltk.tokenize.RegexpTokenizer("[\w]+").tokenize(titular)
-        
         titular = [word for word in titular if word not in stopwords_english]
         titular = [word for word in titular if word not in filtrar]
-
         todos.append(titular)
-    
+
+    # Flatten lista de listas
     comments_rubiales = list(itertools.chain(*todos))
     freq_comments_rubiales = nltk.FreqDist(comments_rubiales)
 
-    df_freq_comments = pd.DataFrame(list(freq_comments_rubiales.items()), columns = ["Word","Frequency"])
-    df_freq_comments.sort_values('Frequency',ascending=False, inplace = True)
+    # DataFrame con frecuencia de palabras
+    df_freq_comments = pd.DataFrame(list(freq_comments_rubiales.items()), columns=["Word", "Frequency"])
+    df_freq_comments.sort_values('Frequency', ascending=False, inplace=True)
+    df_freq_comments.reset_index(drop=True, inplace=True)
 
-    df_freq_comments.reset_index(drop = True, inplace=True)
-
+    # Top 30 palabras
     top_30_words = df_freq_comments.iloc[:30]
 
-    # Crear el gráfico de barras con Plotly
-    
-    fig = px.bar(top_30_words, x='Word', y='Frequency', color='Frequency', labels={'Word': 'Palabra', 'Frequency': 'Frecuencia'} )
-    fig.update_xaxes(tickangle=45)  # Rotar las etiquetas del eje x para mayor legibilidad
+    # Gráfico de barras con Plotly
+    fig = px.bar(
+        top_30_words,
+        x='Word',
+        y='Frequency',
+        color='Frequency',
+        labels={'Word': 'Palabra', 'Frequency': 'Frecuencia'}
+    )
+    fig.update_xaxes(tickangle=45)
 
-        
+    # Generar WordCloud si hay palabras
+    word_freq = dict(zip(df_freq_comments['Word'], df_freq_comments['Frequency']))
+    if word_freq:
+        wc = WordCloud(
+            max_words=7200,
+            width=1600,
+            height=1000,
+            stopwords=stopwords_english,
+            background_color='white'
+        ).generate_from_frequencies(word_freq)
 
-        
-    
-    ## Generar el diccionario de frecuencias
-word_freq = dict(zip(df_freq_comments['Word'], df_freq_comments['Frequency']))
+        # Función para mostrar WordCloud
+        def plot_cloud(wc):
+            plt.figure(figsize=(10,6))
+            plt.imshow(wc.to_array(), interpolation='bilinear')
+            plt.axis("off")
+            st.pyplot(plt)
 
-# Comprobar que hay palabras
-if word_freq:
-    wc = WordCloud(
-        max_words=7200,
-        width=1600,
-        height=1000,
-        stopwords=stopwords_english,
-        background_color='white'
-    ).generate_from_frequencies(word_freq)
+        st.write(":blue[WORDCLOUD]")
+        plot_cloud(wc)
+    else:
+        st.warning("No hay palabras para generar la nube de palabras.")
 
-def plot_cloud(wc):
-    # Crear figura
-    plt.figure(figsize=(10,6))
-    # Mostrar la WordCloud
-    plt.imshow(wc.to_array(), interpolation='bilinear')
-    plt.axis("off")
-    # Mostrar directamente en Streamlit
-    st.pyplot(plt)
-    
-    # Título
-    st.write(":blue[WORDCLOUD]")
-    
-# Llamada a la función
-plot_cloud(wc)
-    
-# Frecuencia de palabras
-st.write(':blue[Frecuencia de palabras más usadas]')
-st.plotly_chart(fig)
-else:
-    st.warning("No hay palabras para generar la nube de palabras.")
+    # Mostrar gráfico de barras
+    st.write(':blue[Frecuencia de palabras más usadas]')
+    st.plotly_chart(fig)
 def SIA_POLARITY(texto):
     # Calcular el puntaje de sentimiento del texto
     sentimiento = sia.polarity_scores(texto)
