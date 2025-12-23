@@ -210,23 +210,29 @@ def tendencias(data):
 
         
     
-    # Crear un diccionario de palabras y sus frecuencias
-    word_freq = dict(zip(df_freq_comments['Word'], df_freq_comments['Frequency']))
-    
-    wc = WordCloud( max_words=7200, width=1600,height = 1000 , stopwords = stopwords_english).generate_from_frequencies(word_freq)
-    def plot_cloud(wc):
-        # Set figure size
-        plt.figure(figsize=(10,6))
-        # Display image from WordCloud object
-        plt.imshow(wc.to_array(), interpolation='bilinear') 
-        # No axis details
-        plt.axis("off")
-        # Save the image
-        plt.savefig("wordcloud.png", bbox_inches="tight")
-        # Display in Streamlit
-        st.image("wordcloud.png")
+    ## Generar el diccionario de frecuencias
+word_freq = dict(zip(df_freq_comments['Word'], df_freq_comments['Frequency']))
 
-# Título
+# Comprobar que hay palabras
+if word_freq:
+    wc = WordCloud(
+        max_words=7200,
+        width=1600,
+        height=1000,
+        stopwords=stopwords_english,
+        background_color='white'
+    ).generate_from_frequencies(word_freq)
+
+    def plot_cloud(wc):
+        # Crear figura
+        plt.figure(figsize=(10,6))
+        # Mostrar la WordCloud
+        plt.imshow(wc.to_array(), interpolation='bilinear')
+        plt.axis("off")
+        # Mostrar directamente en Streamlit
+        st.pyplot(plt)
+    
+    # Título
     st.write(":blue[WORDCLOUD]")
     
     # Llamada a la función
@@ -235,6 +241,8 @@ def tendencias(data):
     # Frecuencia de palabras
     st.write(':blue[Frecuencia de palabras más usadas]')
     st.plotly_chart(fig)
+else:
+    st.warning("No hay palabras para generar la nube de palabras.")
 def SIA_POLARITY(texto):
     # Calcular el puntaje de sentimiento del texto
     sentimiento = sia.polarity_scores(texto)
