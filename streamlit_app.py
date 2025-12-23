@@ -29,8 +29,8 @@ def main():
             #lottie_json = load_lottieurl(lottie_url)
             st_lottie(lottie_json,height=400)
             
-            lottie_json = load_lottieurl("B.json")
-            st_lottie(lottie_json,height=400)
+            lottie_json1 = load_lottieurl("B.json")
+            st_lottie(lottie_json1,height=400)
         with rigth:
             st.title(":red[YT Sentiment Inspector v1.0!]")
             
